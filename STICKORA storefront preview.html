@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>STICKORA · Stick Your Imagination</title>
+<meta name="description" content="STICKORA makes premium custom stickers. Shop ready-made collections or design your own in the studio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#171717;--paper:#F8F7F3;--card:#FFFFFF;--grey:#EAEAEA;--muted:#6E6E6E;--orange:#FF6633;--lav:#B7A5FF;--mint:#9ED8C5;--gold:#F2C14E;--r:18px;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#F8F7F3;--paper:#141414;--card:#1E1E1E;--grey:#2A2A2A;--muted:#A6A6A6;color-scheme:dark}}
+:root[data-theme="dark"]{--ink:#F8F7F3;--paper:#141414;--card:#1E1E1E;--grey:#2A2A2A;--muted:#A6A6A6;color-scheme:dark}
+
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.5 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--paper)}
+h1,h2,h3{margin:0;letter-spacing:-.02em;line-height:1.1}
+h1{font-size:clamp(40px,7vw,76px);font-weight:800}
+h2{font-size:clamp(28px,4vw,40px);font-weight:700}
+h3{font-size:17px;font-weight:600;letter-spacing:-.01em}
+p{margin:0}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+input:focus,select:focus{outline:2px solid var(--orange);outline-offset:1px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:14px}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+
+.bar{background:var(--ink);color:var(--paper);font-size:13px;text-align:center;padding:8px 16px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--grey)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-weight:800;letter-spacing:.08em;font-size:18px}
+.logo span{color:var(--orange)}
+header nav{display:flex;gap:24px}
+header nav a{font-size:15px;font-weight:500;color:var(--muted)}
+header nav a:hover{color:var(--ink)}
+@media (max-width:519px){header nav{display:none}}
+.cart-btn{background:var(--ink);color:var(--paper);border:0;border-radius:999px;padding:9px 16px;font-size:14px;font-weight:600;display:flex;gap:8px;align-items:center}
+.cart-btn span{background:var(--orange);color:#fff;border-radius:999px;min-width:22px;height:22px;display:inline-grid;place-items:center;font-size:12px;padding:0 6px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:50px;padding:0 24px;border-radius:999px;border:1px solid var(--ink);background:transparent;font-weight:600;font-size:15px;transition:transform .25s cubic-bezier(.2,.8,.2,1),background .2s,color .2s,border-color .2s;text-align:center}
+.btn:hover{transform:translateY(-2px)}
+.btn.primary{background:var(--ink);color:var(--paper)}
+.btn.primary:hover{background:var(--orange);border-color:var(--orange);color:#fff}
+.btn.sm{height:38px;padding:0 16px;font-size:14px;background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.btn.wide{width:100%}
+
+.hero{padding:56px 0 40px;overflow:hidden}
+.hero-in{display:grid;gap:24px;align-items:center}
+.lead{font-size:18px;color:var(--muted);max-width:480px;margin-top:20px}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.stage{position:relative;height:340px}
+.p{position:absolute;transition:transform .6s cubic-bezier(.2,.8,.2,1);animation:in .9s ease both}
+@keyframes in{from{opacity:0}to{opacity:1}}
+.stage .sticker{animation:float 7s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-14px) rotate(3deg)}}
+@media (min-width:900px){
+  .hero{padding:88px 0 72px}
+  .hero-in{grid-template-columns:1.05fr 1fr;gap:40px}
+  .stage{height:500px}
+}
+@media (max-width:899px){.stage .sticker{width:calc(var(--w)*.72)}}
+
+.sticker{position:relative;width:var(--w,120px);aspect-ratio:1;background:var(--lav);overflow:hidden;box-shadow:0 0 0 6px #fff,0 22px 32px -14px rgba(0,0,0,.35);transition:width .4s cubic-bezier(.2,.8,.2,1),border-radius .4s,background .3s}
+.sticker img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .2s}
+.sticker::after{content:"";position:absolute;inset:0;pointer-events:none}
+.shape-circle{border-radius:50%}
+.shape-square{border-radius:10px}
+.shape-rect{aspect-ratio:3/2;border-radius:10px}
+.shape-die{border-radius:44% 56% 52% 48%/52% 44% 56% 48%}
+.shape-kiss{border-radius:26px;outline:2px dashed var(--ink);outline-offset:8px}
+.fin-matte::after{background:rgba(0,0,0,.04)}
+.fin-glossy::after{background:linear-gradient(125deg,rgba(255,255,255,.55) 0%,rgba(255,255,255,0) 42%)}
+.fin-holographic::after{background:linear-gradient(115deg,rgba(255,255,255,0),rgba(255,255,255,.6),rgba(158,216,197,.5),rgba(242,193,78,.4),rgba(255,255,255,0));mix-blend-mode:overlay}
+.fin-transparent{background:repeating-conic-gradient(#d9d9d9 0% 25%,#fff 0% 50%) 50%/16px 16px!important}
+.fin-transparent img{opacity:.9}
+.ph{position:absolute;inset:0;display:grid;place-items:center;font-size:13px;font-weight:600;text-align:center;padding:14px;color:var(--ink);opacity:.85;z-index:1}
+
+.section{padding:72px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:28px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.tools input{flex:1 1 220px;height:46px;border-radius:999px;border:1px solid var(--grey);background:var(--card);padding:0 18px}
+.tools select{height:46px;border-radius:999px;border:1px solid var(--grey);background:var(--card);padding:0 14px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:24px;scrollbar-width:none}
+.chip{flex:none;border:1px solid var(--grey);background:var(--card);border-radius:999px;padding:8px 16px;font-size:14px;font-weight:500}
+.chip.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media (min-width:900px){.grid{grid-template-columns:repeat(4,1fr);gap:22px}}
+.card{background:var(--card);border-radius:var(--r);overflow:hidden;border:1px solid var(--grey);display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+.card:hover{transform:translateY(-4px);box-shadow:0 24px 40px -24px rgba(0,0,0,.3)}
+.thumb{aspect-ratio:1;background:var(--paper);display:grid;place-items:center}
+.meta{padding:14px 16px 16px;display:grid;gap:8px}
+.badge{font-size:11px;font-weight:600;background:var(--lav);color:var(--ink);padding:3px 8px;border-radius:999px;white-space:nowrap}
+.empty{grid-column:1/-1;color:var(--muted);padding:40px 0;text-align:center}
+
+.studio{background:var(--card);border-block:1px solid var(--grey)}
+.studio-in{display:grid;gap:40px}
+@media (min-width:900px){.studio-in{grid-template-columns:1fr 1fr;align-items:start;gap:64px}}
+.canvas{margin:24px 0 12px;background:var(--paper);border-radius:var(--r);min-height:340px;display:grid;place-items:center;padding:36px 20px;border:1px solid var(--grey)}
+.controls{display:grid;gap:22px}
+.drop{border:1.5px dashed var(--muted);border-radius:var(--r);padding:26px 18px;text-align:center;display:grid;gap:6px;cursor:pointer;transition:border-color .2s,background .2s}
+.drop:hover,.drop.hot{border-color:var(--orange);background:color-mix(in srgb,var(--orange) 8%,transparent)}
+.err{color:#D9381E;font-size:14px;min-height:20px}
+fieldset{border:0;margin:0;padding:0;display:grid;gap:10px;min-width:0}
+legend,.field label{font-size:14px;font-weight:600;margin-bottom:6px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{border:1px solid var(--grey);background:var(--paper);border-radius:999px;padding:9px 14px;font-size:14px}
+.opt.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.field{display:grid;gap:4px}
+input[type=range]{width:100%;accent-color:var(--orange)}
+.stepper{display:inline-flex;align-items:center;border:1px solid var(--grey);border-radius:999px;overflow:hidden;width:max-content}
+.stepper button{width:44px;height:44px;border:0;background:var(--paper);font-size:18px}
+.stepper input{width:64px;height:44px;border:0;text-align:center;background:transparent;font-size:16px;font-weight:600;color:var(--ink)}
+.quote{display:grid;gap:8px;border-top:1px solid var(--grey);padding-top:18px}
+.quote strong{font-size:20px}
+
+.grid3{display:grid;gap:14px}
+@media (min-width:800px){.grid3{grid-template-columns:repeat(3,1fr);gap:24px}}
+.pt{padding:26px;border-radius:var(--r);background:var(--card);border:1px solid var(--grey)}
+.pt p{color:var(--muted);margin-top:8px}
+
+.news{display:grid;gap:20px;background:var(--ink);color:var(--paper);border-radius:24px;padding:40px 24px}
+.news .muted{color:color-mix(in srgb,var(--paper) 70%,transparent)}
+.news form{display:grid;gap:10px;grid-template-columns:1fr auto}
+.news input{height:50px;border-radius:999px;border:0;padding:0 20px;background:var(--paper);color:var(--ink);min-width:0}
+.news .btn.primary{background:var(--orange);color:#fff;border-color:var(--orange)}
+.news .err{grid-column:1/-1;color:#FFB3A0;min-height:0}
+@media (min-width:800px){.news{grid-template-columns:1fr 1fr;align-items:center;padding:56px}}
+
+footer{padding:40px 0 56px;border-top:1px solid var(--grey);margin-top:40px}
+.foot{display:grid;gap:14px;justify-items:start}
+.foot nav{display:flex;gap:18px;flex-wrap:wrap}
+.foot nav a{color:var(--muted);font-size:14px}
+
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .3s;z-index:40}
+.overlay.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--paper);z-index:50;transform:translateX(100%);transition:transform .4s cubic-bezier(.2,.8,.2,1);display:grid;grid-template-rows:auto 1fr auto;box-shadow:-20px 0 40px -20px rgba(0,0,0,.3);padding-top:env(safe-area-inset-top,0px)}
+.drawer.open{transform:none}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:20px 22px;border-bottom:1px solid var(--grey)}
+.dh h2{font-size:22px}
+.icon{width:40px;height:40px;border-radius:50%;border:1px solid var(--grey);background:var(--card);font-size:20px;line-height:1;color:var(--ink)}
+.lines{list-style:none;margin:0;padding:4px 22px;overflow:auto}
+.line{display:grid;grid-template-columns:52px 1fr auto;gap:14px;padding:16px 0;border-bottom:1px solid var(--grey);align-items:start}
+.line .empty{grid-column:auto;text-align:left;padding:40px 0}
+.dot{width:52px;height:52px;border-radius:50%;overflow:hidden;display:block}
+.dot img{width:100%;height:100%;object-fit:cover;display:block}
+.grow{min-width:0}
+.grow strong{font-size:15px}
+.qty{display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap}
+.qty button{width:30px;height:30px;border-radius:50%;border:1px solid var(--grey);background:var(--card);color:var(--ink)}
+.qty .link{border:0;background:none;text-decoration:underline;color:var(--muted);font-size:13px;width:auto;height:auto;border-radius:0;padding:0 4px}
+.dfoot{padding:18px 22px 22px;border-top:1px solid var(--grey);display:grid;gap:12px}
+.dfoot strong{font-size:20px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,160%);background:var(--ink);color:var(--paper);padding:12px 18px;border-radius:999px;font-size:14px;font-weight:500;z-index:60;transition:transform .35s cubic-bezier(.2,.8,.2,1);max-width:calc(100% - 32px);text-align:center}
+.toast.show{transform:translate(-50%,0)}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<div class="bar">Preview build: sample catalogue and prices. Checkout is not connected yet.</div>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="logo" aria-label="STICKORA home">STICKORA<span>.</span></a>
+    <nav aria-label="Main">
+      <a href="#shop">Shop</a>
+      <a href="#studio">Studio</a>
+      <a href="#quality">Quality</a>
+    </nav>
+    <button class="cart-btn" id="cartBtn" aria-label="Open cart">Cart <span id="count">0</span></button>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="top">
+  <div class="wrap hero-in">
+    <div>
+      <p class="eyebrow">Stick Your Imagination.</p>
+      <h1>Your Ideas Deserve to Stick.</h1>
+      <p class="lead">Turn your imagination into premium-quality custom stickers. Designed by you, made by us.</p>
+      <div class="ctas">
+        <a class="btn primary" href="#studio">Create Your Sticker</a>
+        <a class="btn" href="#shop">Explore Collections</a>
+      </div>
+    </div>
+    <div class="stage" id="stage" aria-hidden="true">
+      <div class="p" data-d="22" style="top:6%;left:12%"><div class="sticker shape-circle" style="--w:150px;background:var(--orange);animation-delay:0s"></div></div>
+      <div class="p" data-d="40" style="top:40%;left:52%"><div class="sticker shape-square" style="--w:120px;background:var(--lav);animation-delay:-2s"></div></div>
+      <div class="p" data-d="14" style="top:58%;left:6%"><div class="sticker shape-die" style="--w:100px;background:var(--mint);animation-delay:-4s"></div></div>
+      <div class="p" data-d="30" style="top:2%;left:58%"><div class="sticker shape-kiss" style="--w:110px;background:var(--gold);animation-delay:-1s"></div></div>
+      <div class="p" data-d="50" style="top:70%;left:44%"><div class="sticker shape-rect" style="--w:130px;background:var(--ink);animation-delay:-3s"></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="shop">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">Shop</p>
+        <h2>Ready-made collections</h2>
+      </div>
+      <p class="muted small">Sample catalogue for preview.</p>
+    </div>
+    <div class="tools">
+      <label class="sr" for="q">Search stickers</label>
+      <input id="q" type="search" placeholder="Search stickers" autocomplete="off">
+      <label class="sr" for="sort">Sort products</label>
+      <select id="sort">
+        <option value="featured">Featured</option>
+        <option value="low">Price: low to high</option>
+        <option value="high">Price: high to low</option>
+      </select>
+    </div>
+    <div class="chips" id="chips" role="group" aria-label="Categories"></div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<section class="section studio" id="studio">
+  <div class="wrap studio-in">
+    <div>
+      <p class="eyebrow">Studio</p>
+      <h2>Design your own sticker</h2>
+      <div class="canvas">
+        <div class="sticker shape-circle fin-matte" id="sticker" style="--w:172px">
+          <img id="pimg" alt="Your uploaded design" hidden>
+          <span class="ph" id="ph">Upload an image to preview it here</span>
+        </div>
+      </div>
+      <p class="muted small">The preview is approximate. Printed colours may differ slightly.</p>
+    </div>
+
+    <div class="controls">
+      <label class="drop" id="drop">
+        <input type="file" id="file" accept="image/png,image/jpeg,image/webp" hidden>
+        <strong>Drop an image here or browse</strong>
+        <span class="muted small">PNG, JPG or WebP · up to 5 MB</span>
+      </label>
+      <p class="err" id="err" role="alert"></p>
+
+      <div class="field">
+        <label for="zoom">Zoom</label>
+        <input id="zoom" type="range" min="1" max="2.5" step="0.05" value="1">
+      </div>
+
+      <fieldset><legend>Shape</legend><div class="opts" id="shapes"></div></fieldset>
+      <fieldset><legend>Size</legend><div class="opts" id="sizes"></div></fieldset>
+      <fieldset><legend>Finish</legend><div class="opts" id="finishes"></div></fieldset>
+
+      <div class="field">
+        <label for="qty">Quantity</label>
+        <div class="stepper">
+          <button id="qDec" type="button" aria-label="Decrease quantity">−</button>
+          <input id="qty" type="number" min="1" max="500" value="1">
+          <button id="qInc" type="button" aria-label="Increase quantity">+</button>
+        </div>
+      </div>
+
+      <div class="quote">
+        <div class="row"><span>Unit price</span><strong id="unit">₹0</strong></div>
+        <div class="row"><span>Total</span><strong id="total">₹0</strong></div>
+        <p class="muted small" id="bulk"></p>
+      </div>
+
+      <button class="btn primary wide" id="addCustom" type="button">Add customised sticker to cart</button>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="quality">
+  <div class="wrap grid3">
+    <div class="pt"><h3>Shapes that fit your design</h3><p>Circle, square, rectangle, die-cut and kiss-cut options.</p></div>
+    <div class="pt"><h3>Finishes for every look</h3><p>Matte, glossy, holographic or transparent.</p></div>
+    <div class="pt"><h3>See it before you order</h3><p>Preview your sticker in the studio before it goes into your cart.</p></div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="news">
+      <div>
+        <h2>Get new drops first</h2>
+        <p class="muted" style="margin-top:12px">We'll only email you about new collections.</p>
+      </div>
+      <form id="nl" novalidate>
+        <label class="sr" for="em">Email address</label>
+        <input id="em" type="email" placeholder="you@example.com" autocomplete="email">
+        <button class="btn primary" type="submit">Subscribe</button>
+        <p class="err" id="nlErr" role="alert"></p>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span class="logo">STICKORA<span>.</span></span>
+    <nav aria-label="Footer">
+      <a href="#shop">Shop</a>
+      <a href="#studio">Studio</a>
+      <a href="#quality">Quality</a>
+    </nav>
+    <p class="muted small">© STICKORA. Preview build: legal entity details and policies are not published yet.</p>
+  </div>
+</footer>
+
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle" aria-hidden="true">
+  <div class="dh">
+    <h2 id="cartTitle">Your cart</h2>
+    <button class="icon" id="closeCart" type="button" aria-label="Close cart">×</button>
+  </div>
+  <ul class="lines" id="cartList"></ul>
+  <div class="dfoot">
+    <div class="row"><span>Subtotal</span><strong id="subtotal">₹0</strong></div>
+    <p class="muted small">10 or more of the same item get 10% off. Shipping and taxes are shown at checkout.</p>
+    <button class="btn primary wide" id="checkout" type="button">Checkout</button>
+  </div>
+</aside>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = n => '₹' + Math.round(n).toLocaleString('en-IN');
+
+const CATS = [['all','All'],['anime','Anime'],['minimal','Minimalist'],['gaming','Gaming'],['laptop','Laptop'],['aesthetic','Aesthetic'],['typography','Typography'],['business','Business'],['packs','Custom packs']];
+const PRODUCTS = [
+  {id:'p1', name:'Neon Samurai',        cat:'anime',      price:149, finish:'Glossy',      shape:'circle', hue:'#FF6633', badge:'Best seller'},
+  {id:'p2', name:'Quiet Lines',         cat:'minimal',    price:99,  finish:'Matte',       shape:'square', hue:'#171717'},
+  {id:'p3', name:'Pixel Respawn',       cat:'gaming',     price:129, finish:'Holographic', shape:'die',    hue:'#B7A5FF', badge:'New'},
+  {id:'p4', name:'Laptop Lore',         cat:'laptop',     price:199, finish:'Matte',       shape:'rect',   hue:'#9ED8C5'},
+  {id:'p5', name:'Golden Hour Bloom',   cat:'aesthetic',  price:129, finish:'Glossy',      shape:'die',    hue:'#F2C14E', badge:'Best seller'},
+  {id:'p6', name:'Hello, Loudly',       cat:'typography', price:99,  finish:'Matte',       shape:'kiss',   hue:'#FF6633', badge:'New'},
+  {id:'p7', name:'Startup Mode',        cat:'business',   price:249, finish:'Matte',       shape:'rect',   hue:'#171717'},
+  {id:'p8', name:'Creator Starter Pack',cat:'packs',      price:349, finish:'Holographic', shape:'square', hue:'#B7A5FF', badge:'Pack'}
+];
+const SHAPES = [['circle','Circle',0],['square','Square',0],['rect','Rectangle',0],['die','Die-cut',20],['kiss','Kiss-cut',25]];
+const SIZES = {S:['Small · 5 cm',49], M:['Medium · 7.5 cm',79], L:['Large · 10 cm',119]};
+const FINISHES = {Matte:0, Glossy:10, Holographic:30, Transparent:20};
+
+let cart = [];
+let activeCat = 'all';
+const st = {shape:'circle', size:'M', finish:'Matte', qty:1, img:null, name:'', zoom:1};
+
+const catLabel = k => (CATS.find(c => c[0] === k) || [])[1] || '';
+const shapeMeta = k => SHAPES.find(s => s[0] === k);
+const unitPrice = () => SIZES[st.size][1] + shapeMeta(st.shape)[2] + FINISHES[st.finish];
+const lineTotal = i => Math.round(i.unit * i.qty * (i.qty >= 10 ? 0.9 : 1));
+function toast(msg){
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toast.t);
+  toast.t = setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+/* ---------- Shop ---------- */
+function card(p){
+  return `<article class="card">
+    <div class="thumb"><div class="sticker shape-${p.shape} fin-${p.finish.toLowerCase()}" style="--w:118px;background:${p.hue}"></div></div>
+    <div class="meta">
+      <div class="row"><h3>${esc(p.name)}</h3>${p.badge ? `<span class="badge">${p.badge}</span>` : ''}</div>
+      <p class="muted small">${catLabel(p.cat)} · ${p.finish}</p>
+      <div class="row"><strong>${fmt(p.price)}</strong><button class="btn sm" type="button" data-add="${p.id}">Add to cart</button></div>
+    </div>
+  </article>`;
+}
+function renderShop(){
+  const q = $('#q').value.trim().toLowerCase();
+  const s = $('#sort').value;
+  let list = PRODUCTS.filter(p => (activeCat === 'all' || p.cat === activeCat) && (!q || (p.name + ' ' + catLabel(p.cat)).toLowerCase().includes(q)));
+  if (s === 'low') list = [...list].sort((a,b) => a.price - b.price);
+  if (s === 'high') list = [...list].sort((a,b) => b.price - a.price);
+  $('#grid').innerHTML = list.length ? list.map(card).join('') : '<p class="empty">No stickers match that search. Try another keyword or category.</p>';
+  $('#chips').innerHTML = CATS.map(([k,l]) => `<button class="chip${k === activeCat ? ' on' : ''}" type="button" data-cat="${k}" aria-pressed="${k === activeCat}">${l}</button>`).join('');
+}
+function addProduct(id){
+  const p = PRODUCTS.find(x => x.id === id);
+  const found = cart.find(i => i.key === id);
+  if (found) found.qty++;
+  else cart.push({key:id, name:p.name, meta:`${catLabel(p.cat)} · ${p.finish}`, unit:p.price, qty:1, hue:p.hue, thumb:null});
+  renderCart();
+  toast(`${p.name} added to cart`);
+}
+
+/* ---------- Studio ---------- */
+function opt(g, v, l, on){ return `<button class="opt${on ? ' on' : ''}" type="button" data-g="${g}" data-v="${v}" aria-pressed="${on}">${l}</button>`; }
+function renderOpts(){
+  $('#shapes').innerHTML = SHAPES.map(([k,l,x]) => opt('shape', k, l + (x ? ` +₹${x}` : ''), st.shape === k)).join('');
+  $('#sizes').innerHTML = Object.entries(SIZES).map(([k,[l]]) => opt('size', k, l, st.size === k)).join('');
+  $('#finishes').innerHTML = Object.keys(FINISHES).map(k => opt('finish', k, FINISHES[k] ? `${k} +₹${FINISHES[k]}` : k, st.finish === k)).join('');
+}
+function renderStudio(){
+  const sticker = $('#sticker');
+  sticker.className = `sticker shape-${st.shape} fin-${st.finish.toLowerCase()}`;
+  sticker.style.setProperty('--w', ({S:130, M:172, L:214})[st.size] + 'px');
+  const im = $('#pimg');
+  if (st.img){ im.src = st.img; im.hidden = false; im.style.transform = `scale(${st.zoom})`; $('#ph').hidden = true; }
+  else { im.hidden = true; $('#ph').hidden = false; }
+  const u = unitPrice();
+  $('#unit').textContent = fmt(u);
+  $('#total').textContent = fmt(lineTotal({unit:u, qty:st.qty}));
+  $('#bulk').textContent = st.qty >= 10 ? '10% bulk discount applied.' : 'Order 10 or more for 10% off.';
+  $('#qty').value = st.qty;
+  renderOpts();
+}
+function setQty(n){ st.qty = Math.min(500, Math.max(1, Math.round(Number(n)) || 1)); renderStudio(); }
+function loadFile(f){
+  $('#err').textContent = '';
+  if (!f) return;
+  if (!['image/png','image/jpeg','image/webp'].includes(f.type)){ $('#err').textContent = 'Please choose a PNG, JPG or WebP image.'; return; }
+  if (f.size > 5 * 1024 * 1024){ $('#err').textContent = 'That image is over 5 MB. Please choose a smaller file.'; return; }
+  st.img = URL.createObjectURL(f);
+  st.name = f.name;
+  st.zoom = 1;
+  $('#zoom').value = 1;
+  renderStudio();
+  toast('Image added to your design');
+}
+
+/* ---------- Cart ---------- */
+function renderCart(){
+  $('#count').textContent = cart.reduce((a,i) => a + i.qty, 0);
+  $('#cartList').innerHTML = cart.length ? cart.map((i,x) => `
+    <li class="line">
+      <span class="dot" style="background:${i.hue}">${i.thumb ? `<img src="${i.thumb}" alt="">` : ''}</span>
+      <div class="grow">
+        <strong>${esc(i.name)}</strong>
+        <div class="muted small">${esc(i.meta)}</div>
+        <div class="qty">
+          <button type="button" data-dec="${x}" aria-label="Decrease quantity">−</button>
+          <span>${i.qty}</span>
+          <button type="button" data-inc="${x}" aria-label="Increase quantity">+</button>
+          <button type="button" class="link" data-rm="${x}">Remove</button>
+        </div>
+      </div>
+      <strong>${fmt(lineTotal(i))}</strong>
+    </li>`).join('') : '<li class="empty">Your cart is empty. Add a ready-made sticker or design your own.</li>';
+  $('#subtotal').textContent = fmt(cart.reduce((a,i) => a + lineTotal(i), 0));
+}
+function openCart(){
+  $('#drawer').classList.add('open');
+  $('#overlay').classList.add('open');
+  $('#drawer').setAttribute('aria-hidden', 'false');
+  $('#closeCart').focus();
+}
+function closeCart(){
+  $('#drawer').classList.remove('open');
+  $('#overlay').classList.remove('open');
+  $('#drawer').setAttribute('aria-hidden', 'true');
+}
+
+/* ---------- Wiring ---------- */
+$('#q').addEventListener('input', renderShop);
+$('#sort').addEventListener('change', renderShop);
+$('#chips').addEventListener('click', e => {
+  const c = e.target.closest('[data-cat]');
+  if (c){ activeCat = c.dataset.cat; renderShop(); }
+});
+$('#grid').addEventListener('click', e => {
+  const b = e.target.closest('[data-add]');
+  if (b) addProduct(b.dataset.add);
+});
+
+$('#shapes').parentElement; // ensure options exist before wiring
+document.querySelector('.controls').addEventListener('click', e => {
+  const b = e.target.closest('[data-g]');
+  if (!b) return;
+  st[b.dataset.g] = b.dataset.v;
+  renderStudio();
+});
+
+const drop = $('#drop');
+$('#file').addEventListener('change', () => loadFile($('#file').files[0]));
+['dragenter','dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('hot'); }));
+['dragleave','drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('hot'); }));
+drop.addEventListener('drop', e => loadFile(e.dataTransfer.files[0]));
+
+$('#zoom').addEventListener('input', e => { st.zoom = Number(e.target.value); renderStudio(); });
+$('#qDec').addEventListener('click', () => setQty(st.qty - 1));
+$('#qInc').addEventListener('click', () => setQty(st.qty + 1));
+$('#qty').addEventListener('change', e => setQty(e.target.value));
+
+$('#addCustom').addEventListener('click', () => {
+  if (!st.img){
+    $('#err').textContent = 'Upload an image first so there is a design to print.';
+    drop.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  cart.push({
+    key: 'c' + Date.now(),
+    name: `Custom ${shapeMeta(st.shape)[1]} sticker`,
+    meta: `${SIZES[st.size][0]} · ${st.finish} · ${st.name || 'uploaded image'}`,
+    unit: unitPrice(),
+    qty: st.qty,
+    hue: '#B7A5FF',
+    thumb: st.img
+  });
+  renderCart();
+  toast('Custom sticker added to cart');
+});
+
+$('#cartList').addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if (!b) return;
+  const d = b.dataset;
+  if (d.inc !== undefined){ cart[+d.inc].qty = Math.min(500, cart[+d.inc].qty + 1); }
+  if (d.dec !== undefined){ cart[+d.dec].qty = Math.max(1, cart[+d.dec].qty - 1); }
+  if (d.rm !== undefined){ cart.splice(+d.rm, 1); }
+  renderCart();
+});
+$('#checkout').addEventListener('click', () => {
+  toast(cart.length ? "Checkout isn't connected in this preview yet." : 'Add something to your cart first.');
+});
+$('#cartBtn').addEventListener('click', openCart);
+$('#closeCart').addEventListener('click', closeCart);
+$('#overlay').addEventListener('click', closeCart);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCart(); });
+
+$('#nl').addEventListener('submit', e => {
+  e.preventDefault();
+  const v = $('#em').value.trim();
+  const ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+  $('#nlErr').textContent = ok ? '' : 'Please enter a valid email address.';
+  if (ok){
+    e.target.reset();
+    toast("Thanks! Preview only: this address isn't saved yet.");
+  }
+});
+
+const stage = $('#stage');
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (!reduceMotion){
+  stage.addEventListener('pointermove', e => {
+    const r = stage.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    stage.querySelectorAll('.p').forEach(p => {
+      const d = Number(p.dataset.d);
+      p.style.transform = `translate(${x * d}px, ${y * d}px)`;
+    });
+  });
+  stage.addEventListener('pointerleave', () => stage.querySelectorAll('.p').forEach(p => p.style.transform = ''));
+}
+
+renderOpts();
+renderStudio();
+renderShop();
+renderCart();
+</script>
+</body>
+</html>
